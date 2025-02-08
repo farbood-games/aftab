@@ -24,9 +24,14 @@
       font-family: 'farhood';
     }
 
-    img {
+    body>img {
       margin: 0 auto;
+      margin-top: 16px;
       width: 80%;
+    }
+
+    button>img {
+      width: 40%;
     }
 
     h1 {
@@ -51,7 +56,10 @@
     }
 
     button {
-      padding: 10px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* padding: 10px 20px; */
       border: none;
       border-radius: 5px;
       background: #af4c4c;
@@ -87,7 +95,9 @@
   <div class="player-container">
     <canvas class="waveform"></canvas>
     <div class="controls">
-      <button class="playPauseBtn">پخش</button>
+      <button class="playPauseBtn">
+        <img src="imgs/play-button.png" alt="Play" class="playPauseIcon">
+      </button>
       <input type="range" class="seekBar" value="0" />
     </div>
     <audio class="audioElement" src="Audios/day1.mp3"></audio>
@@ -163,16 +173,19 @@
 
       // Player control events
       playPauseBtn.addEventListener('click', () => {
+        const icon = playPauseBtn.querySelector('.playPauseIcon');
         if (audio.paused) {
           audio.play();
-          playPauseBtn.textContent = 'توقف';
+          // playPauseBtn.textContent = 'توقف';
+          icon.src = "imgs/pause-button.png";
           // Ensure the AudioContext is resumed (required by some browsers)
           if (audioContext.state === 'suspended') {
             audioContext.resume();
           }
         } else {
           audio.pause();
-          playPauseBtn.textContent = 'پخش';
+          // playPauseBtn.textContent = 'پخش';
+          icon.src = "imgs/play-button.png";
         }
       });
 
@@ -191,7 +204,9 @@
       });
 
       audio.addEventListener('ended', () => {
-        playPauseBtn.textContent = 'Play';
+        // playPauseBtn.textContent = 'Play';
+        const icon = playPauseBtn.querySelector('.playPauseIcon');
+        icon.src = "imgs/play-button.png";
         seekBar.value = 0;
       });
 
